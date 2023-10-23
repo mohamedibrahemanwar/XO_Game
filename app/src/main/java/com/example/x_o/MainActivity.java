@@ -1,19 +1,20 @@
 package com.example.x_o;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MainActivity extends AppCompatActivity {
     ConstraintLayout rootview;
 
     TextView player1NameTextView;
     TextView player2NameTextView;
+    TextView player1ScoreTextView;
+    TextView player2ScoreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,9 +24,12 @@ public class MainActivity extends AppCompatActivity {
         player1NameTextView = findViewById(R.id.player1_lb);
         player2NameTextView = findViewById(R.id.player2_lb);
 
-       String player1 = getIntent().getStringExtra(Constant.EXTRA_PLAYER1_NAME);
-       String player2 = getIntent().getStringExtra(Constant.EXTRA_PLAYER2_NAME);
-        player1NameTextView.setText(player1 +" (X)" );
+        player1ScoreTextView = findViewById(R.id.player1_score);
+        player2ScoreTextView = findViewById(R.id.player2_score);
+
+        String player1 = getIntent().getStringExtra(Constant.EXTRA_PLAYER1_NAME);
+        String player2 = getIntent().getStringExtra(Constant.EXTRA_PLAYER2_NAME);
+        player1NameTextView.setText(player1 + " (X)");
         player2NameTextView.setText(player2 + " (O)");
     }
 
@@ -50,9 +54,11 @@ public class MainActivity extends AppCompatActivity {
         counter++;
         if (checkWinner("X")) {
             player1Score += 1;
+            player1ScoreTextView.setText(player1Score);
             resetBoard();
         } else if (checkWinner("O")) {
             player2Score += 1;
+            player2ScoreTextView.setText(player2Score);
             resetBoard();
         } else if (counter == 9) {
             resetBoard();
@@ -106,10 +112,9 @@ public class MainActivity extends AppCompatActivity {
                 boardState[4].equals(playerSymbol) &&
                 boardState[8].equals(playerSymbol)) {
             return true;
-
         }
 
-        if (boardState[2].equals(playerSymbol) &&
+         else if (boardState[2].equals(playerSymbol) &&
                 boardState[4].equals(playerSymbol) &&
                 boardState[6].equals(playerSymbol)) {
             return true;
