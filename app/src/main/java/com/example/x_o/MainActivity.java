@@ -3,6 +3,7 @@ package com.example.x_o;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,26 +40,26 @@ public class MainActivity extends AppCompatActivity {
     int player2Score = 0;
 
     public void onPlayerClick(View view) {
-        Button clickedButtton = (Button) view;
-        if (!clickedButtton.getText().toString().isEmpty()) {
+        Button clickedButton = (Button) view;
+        if (!clickedButton.getText().toString().isEmpty()) {
             return;
         }
         if (counter % 2 == 0) {
-            clickedButtton.setText("X");
-            changeBoardStste(clickedButtton, "X");
+            clickedButton.setText("X");
+            changeBoardState(clickedButton, "X");
         } else {
-            clickedButtton.setText("O");
-            changeBoardStste(clickedButtton, "O");
+            clickedButton.setText("O");
+            changeBoardState(clickedButton, "O");
 
         }
         counter++;
         if (checkWinner("X")) {
             player1Score += 1;
-            player1ScoreTextView.setText(player1Score);
+            player1ScoreTextView.setText(String.valueOf(player1Score));
             resetBoard();
         } else if (checkWinner("O")) {
             player2Score += 1;
-            player2ScoreTextView.setText(player2Score);
+            player2ScoreTextView.setText(String.valueOf(player2Score));
             resetBoard();
         } else if (counter == 9) {
             resetBoard();
@@ -73,24 +74,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearButtons() {
+        /*
         for (int i = 0; i < 9; i++) {
             View view = rootview.findViewWithTag(i + "");
             Button b = (Button) view;
-            b.setText("");
-        }
+            b.setText(null);
 
-//        for (int i =0 ; i<rootview.getChildCount();i++){
-//           View view = rootview.getChildAt(i);
-//           if(view instanceof LinearLayout){
-//               LinearLayout linear = (LinearLayout) view;
-//               for (int j = 0; j<linear.getChildCount();j++){
-//                   if(linear.getChildAt(j)instanceof Button){
-//                      Button button =(Button)linear.getChildAt(j);
-//                      button.setText("");
-//                   }
-//               }
-//           }
-//        }
+}
+         */
+
+        for (int i = 0; i < rootview.getChildCount(); i++) {
+            View view = rootview.getChildAt(i);
+            if (view instanceof LinearLayout) {
+                LinearLayout linear = (LinearLayout) view;
+                for (int j = 0; j < linear.getChildCount(); j++) {
+                    if (linear.getChildAt(j) instanceof Button) {
+                        Button button = (Button) linear.getChildAt(j);
+                        button.setText("");
+                    }
+                }
+            }
+        }
     }
 
     boolean checkWinner(String playerSymbol) {
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         }
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 3; i++) {
             if (boardState[i].equals(playerSymbol) &&
                     boardState[i + 3].equals(playerSymbol) &&
                     boardState[i + 6].equals(playerSymbol)) {
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-         else if (boardState[2].equals(playerSymbol) &&
+        if (boardState[2].equals(playerSymbol) &&
                 boardState[4].equals(playerSymbol) &&
                 boardState[6].equals(playerSymbol)) {
             return true;
@@ -122,42 +126,44 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    private int getClickedButtonIndex(Button clickedButtton) {
-        String tag = ((String) clickedButtton.getTag());
+    private int getClickedButtonIndex(Button clickedButton) {
+        String tag = ((String) clickedButton.getTag());
         return Integer.parseInt(tag);
-//        int index =0;
-//        if(clickedButtton.getId()==R.id.btn_1){
-//            index=0;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_2){
-//            index=1;
-//        }if(clickedButtton.getId()==R.id.btn_3){
-//            index=2;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_4){
-//            index=3;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_5){
-//            index=4;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_6){
-//            index=5;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_7){
-//            index=6;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_8){
-//            index=7;
-//        }
-//        if(clickedButtton.getId()==R.id.btn_9){
-//            index=8;
-//        }
-//        return index;
+        /*
+        int index =0;
+        if(clickedButton.getId()==R.id.btn_1){
+            index=0;
+        }
+        if(clickedButton.getId()==R.id.btn_2){
+            index=1;
+        }if(clickedButton.getId()==R.id.btn_3){
+            index=2;
+        }
+        if(clickedButton.getId()==R.id.btn_4){
+            index=3;
+        }
+        if(clickedButton.getId()==R.id.btn_5){
+            index=4;
+        }
+        if(clickedButton.getId()==R.id.btn_6){
+            index=5;
+        }
+        if(clickedButton.getId()==R.id.btn_7){
+            index=6;
+        }
+        if(clickedButton.getId()==R.id.btn_8){
+            index=7;
+        }
+        if(clickedButton.getId()==R.id.btn_9){
+            index=8;
+        }
+        return index;
+         */
 
     }
 
-    private void changeBoardStste(Button clickedButtton, String playerSymbol) {
-        int index = getClickedButtonIndex(clickedButtton);
+    private void changeBoardState(Button clickedButton, String playerSymbol) {
+        int index = getClickedButtonIndex(clickedButton);
         boardState[index] = playerSymbol;
     }
 }

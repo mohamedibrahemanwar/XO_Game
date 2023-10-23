@@ -11,15 +11,15 @@ import android.widget.EditText;
 public class LoginActivity extends AppCompatActivity {
 EditText player1Edit;
 EditText player2Edit;
-Button button;
+Button buttonToStartGame;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         player1Edit = findViewById(R.id.player1NameEditText);
         player2Edit = findViewById(R.id.player2NameEditText);
-        button = findViewById(R.id.startGame);
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonToStartGame = findViewById(R.id.startGame);
+        buttonToStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startGame();
